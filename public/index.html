@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tracker</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #39ff14;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #00ff99;
+      text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99;
+      margin-bottom: 40px;
+    }
+    .info-box {
+      background-color: #111;
+      border: 1px solid #39ff14;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+    .info-item {
+      font-size: 1.2rem;
+      margin: 15px 0;
+      color: #39ff14;
+    }
+    .label {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fuddu banaya bada maza aaya</h1>
+  <div class="info-box">
+    <div class="info-item"><span class="label">Network Carrier:</span> <span id="carrier">Loading...</span></div>
+    <div class="info-item"><span class="label">Browser/App:</span> <span id="browser">Loading...</span></div>
+    <div class="info-item"><span class="label">Operating System:</span> <span id="os">Loading...</span></div>
+  </div>
+
+  <script>
+    async function loadInfo() {
+      try {
+        const res = await fetch('/api/details');
+        const data = await res.json();
+
+        document.getElementById('carrier').textContent = data.carrier || 'Unknown';
+        document.getElementById('browser').textContent = data.browser || 'Unknown';
+        document.getElementById('os').textContent = data.os || 'Unknown';
+      } catch (e) {
+        document.getElementById('carrier').textContent = 'Error';
+        document.getElementById('browser').textContent = 'Error';
+        document.getElementById('os').textContent = 'Error';
+      }
+    }
+
+    loadInfo();
+  </script>
+</body>
+</html>
